@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">美女图</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="empty_tips">空空如也╮(╯▽╰)╭</string>
+    <string name="error_tips">加载失败╮(╯▽╰)╭</string>
+    <string name="error_refresh">点击重试</string>
+    <string name="loading_tips">正在加载...</string>
+</resources>
