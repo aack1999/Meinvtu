@@ -59,6 +59,8 @@ public class Results implements Serializable{
 
     private int format_flag;
 
+    private List<Episode> episodes;
+
     public void setSummary(String summary) {
         this.summary = summary;
     }
@@ -275,4 +277,11 @@ public class Results implements Serializable{
         return this.format_flag;
     }
 
+    public List<Episode> getEpisodes() {
+        return episodes;
+    }
+
+    public void setEpisodes(List<Episode> episodes) {
+        this.episodes = episodes;
+    }
 }

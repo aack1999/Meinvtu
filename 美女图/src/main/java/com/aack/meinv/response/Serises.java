@@ -14,6 +14,12 @@ private String videoid;
 
 private int tag_type;
 
+    private String name;
+
+    int order;
+
+    private String url;
+
 public void setIs_new(boolean is_new){
 this.is_new = is_new;
 }
@@ -51,4 +57,27 @@ public int getTag_type(){
 return this.tag_type;
 }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 }

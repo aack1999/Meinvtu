@@ -102,6 +102,9 @@ public class TVFragment extends BaseFragment {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (StringUtils.isBlank(mItems.get(position).getVideoid())) {
+                    return;
+                }
                 String url = "http://v.youku.com/v_show/id_" + mItems.get(position).getVideoid() + ".html";
                 Intent intent = new Intent(getContext(), VideoPlayerActivity.class);
                 VideoModel video = new VideoModel();
@@ -170,14 +173,41 @@ public class TVFragment extends BaseFragment {
         });
     }
 
+    public void getTVDetailData(){
+        String url="http://api.mobile.youku.com/layout/android5_0/play/detail?pid=bb2388e929bc3038&guid=ffe45c256911c2d7c9e3a94905747065&_t_=1458629309&e=md5&_s_=c7e2ce647fd32246265704686309d958&network=WIFI&format=&id="+results.getShowid();
+        new WaitProgressDialog(getContext()).startGet(false, url, null, new WaitProgressDialog.RequestCallBackImpl() {
+            @Override
+            public void onSuccess(String result) {
+
+            }
+
+            @Override
+            public void onFailure(String result) {
+
+            }
+        });
+    }
+
     public void upTVDataUI() {
         if (StringUtils.isNotBlank(results.getShowname())) {
             title.setText(results.getShowname());
         }
         Glide.with(getActivity()).load(results.getShow_vthumburl()).diskCacheStrategy(DiskCacheStrategy.ALL).into(img);
         mItems.clear();
-        if (results.getSerises() != null) {
+
+        if (results.getEpisodes()!=null){
+            //优酷没有资源
+            Serises serises=new Serises();
+            serises.setTitle("优酷没有资源,请到其他视频网站搜索");
+            mItems.add(serises);
+        }else if (results.getSerises() != null) {
             mItems.addAll(results.getSerises());
+        }else {
+            //要再掉个接口获取播放movieid
+            Serises serises=new Serises();
+            serises.setTitle("正在获取资源...");
+            mItems.add(serises);
+            getTVDetailData();
         }
         if (mItems.size() > 0) {
             adapter.notifyDataSetChanged();
