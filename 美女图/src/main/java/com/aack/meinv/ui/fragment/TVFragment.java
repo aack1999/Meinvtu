@@ -3,6 +3,7 @@ package com.aack.meinv.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.aack.meinv.R;
 import com.aack.meinv.common.WaitProgressDialog;
+import com.aack.meinv.response.DetailResponse;
 import com.aack.meinv.response.Results;
 import com.aack.meinv.response.Serises;
 import com.aack.meinv.response.TVResponse;
@@ -174,16 +176,41 @@ public class TVFragment extends BaseFragment {
     }
 
     public void getTVDetailData(){
-        String url="http://api.mobile.youku.com/layout/android5_0/play/detail?pid=bb2388e929bc3038&guid=ffe45c256911c2d7c9e3a94905747065&_t_=1458629309&e=md5&_s_=c7e2ce647fd32246265704686309d958&network=WIFI&format=&id="+results.getShowid();
+        String url="http://api.mobile.youku.com/layout/android5_0/play/detail?pid=bb2388e929bc3038&guid=ffe45c256911c2d7c9e3a94905747065&mac=38%3Abc%3A1a%3Aa6%3Ac8%3Abe&imei=861138024623239&ver=5.4.4&_t_=1458635168&e=md5&_s_=2220714d18bebe4740b7acf3bd6378c6&network=WIFI&format=&id="+results.getShowid();
+        Log.e("eeeee",url);
         new WaitProgressDialog(getContext()).startGet(false, url, null, new WaitProgressDialog.RequestCallBackImpl() {
             @Override
             public void onSuccess(String result) {
-
+                mItems.clear();
+                DetailResponse model=ParseUtils.parseJson(result,DetailResponse.class);
+                if (model!=null&&"success".equals(model.getStatus())&&model.getDetail()!=null&&StringUtils.isNotBlank(model.getDetail().getVideoid())){
+                    //存在数据
+                    Serises serises=new Serises();
+                    if (StringUtils.isNotBlank(model.getDetail().getTitle())){
+                        String temp=model.getDetail().getVideo_type();
+                        if (StringUtils.isNotBlank(temp)){
+                            temp="("+temp+")";
+                        }else {
+                            temp="";
+                        }
+                        serises.setTitle(model.getDetail().getTitle()+temp);
+                    }else {
+                        serises.setTitle(results.getShowname());
+                    }
+                    serises.setVideoid(model.getDetail().getVideoid());
+                    mItems.add(serises);
+                    adapter.notifyDataSetChanged();
+                }else {
+                    Serises serises=new Serises();
+                    serises.setTitle("获取视频数据失败");
+                    mItems.add(serises);
+                    adapter.notifyDataSetChanged();
+                }
             }
 
             @Override
             public void onFailure(String result) {
-
+                Log.e("eeeeeee", result + " ");
             }
         });
     }

@@ -60,7 +60,7 @@ public class WaitProgressDialog extends Dialog {
         if (map!=null){
             getBuilder.params(map);
         }
-        getBuilder.build().connTimeOut(800).execute(new StringCallback() {
+        getBuilder.build().connTimeOut(20000).execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e) {
                 dismiss();
