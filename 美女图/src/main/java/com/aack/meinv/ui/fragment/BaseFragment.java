@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.aack.meinv.R;
 import com.aack.meinv.varyview.VaryViewHelper;
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.lang.reflect.Field;
 
@@ -36,7 +37,7 @@ public abstract class BaseFragment extends Fragment{
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(view);
+        ButterKnife.bind(this,view);
         if (null != getLoadingTargetView()) {
             mVaryViewHelper = new VaryViewHelper.Builder()
                     .setDataView(getLoadingTargetView())
@@ -127,6 +128,10 @@ public abstract class BaseFragment extends Fragment{
         Snackbar.make(getActivity().getWindow().getDecorView(), msg, Snackbar.LENGTH_SHORT).show();
     }
 
+    public void showDialog(String msg){
+        new MaterialDialog.Builder(getContext()).title("提示").content(msg).positiveText("确定").show();
+    }
+
     protected void toggleShowLoading(boolean toggle) {
         if (null == mVaryViewHelper) {
             throw new IllegalArgumentException("You must return a right target view for loading");
@@ -150,13 +155,13 @@ public abstract class BaseFragment extends Fragment{
         }
     }
 
-    protected void toggleShowError(boolean toggle, String msg) {
+    protected void toggleShowError(boolean toggle, String msg,View.OnClickListener onClickListener) {
         if (null == mVaryViewHelper) {
             throw new IllegalArgumentException("You must return a right target view for loading");
         }
 
         if (toggle) {
-            mVaryViewHelper.showErrorView();
+            mVaryViewHelper.showErrorView(msg,onClickListener);
         } else {
             mVaryViewHelper.showDataView();
         }

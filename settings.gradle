@@ -1,1 +1,1 @@
-include ':app', ':美女图'
+include ':app', ':美女图', ':sinavideo_playercore-master', ':sinavideo_playersdk-master', ':wkvideoplayer'

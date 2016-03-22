@@ -2,6 +2,8 @@ package com.aack.meinv.common;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout.LayoutParams;
@@ -63,9 +65,9 @@ public class WaitProgressDialog extends Dialog {
             public void onError(Call call, Exception e) {
                 dismiss();
                 callBack.onFailure(e.getMessage());
-                if (e instanceof SocketTimeoutException){
+                if (e instanceof SocketTimeoutException) {
                     callBack.onFailure("请求超时,请稍后再试");
-                }else if (e instanceof UnknownHostException){
+                } else if (e instanceof UnknownHostException) {
                     //无可用网路
                 }
             }
@@ -73,10 +75,30 @@ public class WaitProgressDialog extends Dialog {
             @Override
             public void onResponse(String response) {
                 dismiss();
-                Log.e("dd",response);
+                Log.e("dd", response);
                 callBack.onSuccess(response);
             }
         });
+    }
+
+    public void startNetWork(boolean isShowDialog,final NetWorkBackImpl netWorkBack){
+        if (isShowDialog) {
+            show();
+        }
+        final Handler handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                netWorkBack.onSuccess();
+                hide();
+            }
+        };
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                netWorkBack.onRequest();
+                handler.sendEmptyMessage(0);
+            }
+        }).start();
     }
 
     @Override
@@ -88,6 +110,11 @@ public class WaitProgressDialog extends Dialog {
     public interface RequestCallBackImpl {
         public void onSuccess(String result);
         public void onFailure(String result);
+    }
+
+    public interface NetWorkBackImpl{
+        public void onRequest();
+        public void onSuccess();
     }
 
 }

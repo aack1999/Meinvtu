@@ -1,9 +1,12 @@
 package com.aack.meinv.varyview;
 
 import android.view.View;
+import android.widget.Button;
 
 import com.aack.meinv.R;
 import com.aack.meinv.ui.widget.ProgressWheel;
+
+import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -69,8 +72,12 @@ public class VaryViewHelper {
         stopProgressLoading();
     }
 
-    public void showErrorView() {
+    public void showErrorView(String text,View.OnClickListener onClickListener) {
         mViewHelper.showCaseLayout(mErrorView);
+        Button btn=(Button)mErrorView.findViewById(R.id.vv_error_refresh);
+        if (StringUtils.isNotBlank(text))
+        btn.setText(text);
+        btn.setOnClickListener(onClickListener);
         stopProgressLoading();
     }
 
