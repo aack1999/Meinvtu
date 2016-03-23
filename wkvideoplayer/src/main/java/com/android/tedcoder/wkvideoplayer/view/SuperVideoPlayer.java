@@ -79,6 +79,7 @@ public class SuperVideoPlayer extends RelativeLayout {
     //是否自动隐藏控制栏
     private boolean mAutoHideController = true;
     private int currentIndex=0;//当前播放下标
+    private int curPlayTime;
 
     private Handler mHandler = new Handler(new Handler.Callback() {
         @Override
@@ -223,6 +224,10 @@ public class SuperVideoPlayer extends RelativeLayout {
 
         }
     };
+
+    public int getCurrentIndex(){
+        return currentIndex;
+    }
 
     public void setVideoPlayCallback(VideoPlayCallbackImpl videoPlayCallback) {
         mVideoPlayCallback = videoPlayCallback;
@@ -448,6 +453,7 @@ public class SuperVideoPlayer extends RelativeLayout {
         loadAndPlay(mNowPlayVideo.getPlayUrl(), playTime);
     }
 
+
     /**
      * 加载并开始播放视频
      *
@@ -491,8 +497,12 @@ public class SuperVideoPlayer extends RelativeLayout {
      */
     private void updatePlayTime() {
         int allTime = mSuperVideoView.getDuration();
-        int playTime = mSuperVideoView.getCurrentPosition();
-        mMediaController.setPlayProgressTxt(playTime, allTime);
+        curPlayTime = mSuperVideoView.getCurrentPosition();
+        mMediaController.setPlayProgressTxt(curPlayTime, allTime);
+    }
+
+    public int getPlayTime(){
+        return curPlayTime;
     }
 
     /**

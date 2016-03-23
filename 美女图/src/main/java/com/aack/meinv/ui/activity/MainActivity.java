@@ -2,26 +2,15 @@ package com.aack.meinv.ui.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 
 import com.aack.meinv.R;
-import com.aack.meinv.common.WaitProgressDialog;
-import com.aack.meinv.response.TabListResponse;
 import com.aack.meinv.ui.adapter.TabFragmentAdapter;
-import com.aack.meinv.ui.fragment.MeinvFragment;
 import com.aack.meinv.ui.fragment.MeinvPageFragment;
-import com.aack.meinv.ui.fragment.VideoFragment;
 import com.aack.meinv.ui.fragment.VideoPageFragment;
-import com.aack.meinv.utils.DialogUtils;
-import com.aack.meinv.utils.ParseUtils;
-
-import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;

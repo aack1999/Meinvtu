@@ -24,6 +24,7 @@ import com.aack.meinv.ui.widget.ListViewForScrollView;
 import com.aack.meinv.utils.ParseUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.github.florent37.glidepalette.GlidePalette;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -219,7 +220,10 @@ public class TVFragment extends BaseFragment {
         if (StringUtils.isNotBlank(results.getShowname())) {
             title.setText(results.getShowname());
         }
-        Glide.with(getActivity()).load(results.getShow_vthumburl()).diskCacheStrategy(DiskCacheStrategy.ALL).into(img);
+        Glide.with(getActivity()).load(results.getShow_vthumburl()).listener(GlidePalette.with(results.getShow_vthumburl())
+                .use(GlidePalette.Profile.MUTED_DARK)
+                .intoBackground(title)
+                .intoTextColor(title)).diskCacheStrategy(DiskCacheStrategy.ALL).into(img);
         mItems.clear();
 
         if (results.getEpisodes()!=null){
