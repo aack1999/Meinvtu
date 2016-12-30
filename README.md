@@ -5,4 +5,4 @@
 ![Alt text](/screenshots/S60313-221906.jpg)
  
  thinks [SmoothImageView](https://github.com/liukkevin/SmoothImageView)
- <a href="qxhdyydb://com.qxhd.yydb/qxhd/"> Simple Launch with parameters </a><br/><br/>
+ <a href="qxhdyydb://com.qxhd.yydb/qxhd/"> Simple Launch with parameters </a>
