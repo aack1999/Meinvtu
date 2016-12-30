@@ -5,4 +5,4 @@
 ![Alt text](/screenshots/S60313-221906.jpg)
  
  thinks [SmoothImageView](https://github.com/liukkevin/SmoothImageView)
- <a href="www.baidu.com">测试</a>
+ <a href="http://www.baidu.com">测试</a>
